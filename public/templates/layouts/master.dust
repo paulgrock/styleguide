@@ -8,9 +8,7 @@
             list-style-type: none;
         }
         .color-container {
-            float: left;
-            /*padding: 1rem;*/
-            /*border: 1px solid black;*/
+            display: inline-block;
             margin: 0 1rem 1rem 0;
         }
         .color-block {

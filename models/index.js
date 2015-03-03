@@ -7,13 +7,13 @@ var postcss = require('postcss'),
     namer = require('color-namer'),
     pipetteur = require('pipetteur');
 
-var colors = new Map();
+var colors = {};
 var incrementColor = function incrementColor(color) {
-    if (colors.has(color)) {
-        let count = colors.get(color);
-        colors.set(color, count + 1);
+    if (colors[color]) {
+        let count = colors[color];
+        colors[color] = count + 1;
     } else {
-        colors.set(color, 1);
+        colors[color] = 1;
     }
 }
 module.exports = function IndexModel() {
@@ -26,9 +26,9 @@ module.exports = function IndexModel() {
     });
     parsedStyles.eachRule(function (rule) {
         rule.eachDecl(function(decl) {
-            let colors = pipetteur(decl.value.toLowerCase());
-            colors.forEach(function(color) {
-                let rgbaColor = Color(color.color).cssa();
+            var declColors = pipetteur(decl.value.toLowerCase());
+            declColors.forEach(function(color) {
+                var rgbaColor = Color(color.color).cssa();
                 incrementColor(rgbaColor);
             })
         })
@@ -42,12 +42,13 @@ module.exports = function IndexModel() {
         })
     });
     var colorList = []
-    for (let entry of colors.entries()) {
-        var col = Color(entry[0]).hex()
+    for (var item in colors) {
+        var entry = colors[item];
+        var col = Color(item).hex()
         let names = namer(col);
         colorList.push({
-            count: entry[1],
-            rgba: entry[0],
+            count: entry,
+            rgba: item,
             name: names[0].name
         })
     }
