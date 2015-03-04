@@ -2,14 +2,17 @@
 
 {<body}
     <div>
-        <h1>Colors</h1>
+        <h1>Colors ({@size key=colors /})</h1>
+        <form action="">
+            <input type="text" name="color">
+        </form>
         <ul>
             {#colors}
                 <li class="color-container">
                     <div class="color-block" style="background-color: {rgba};"></div>
-                    <span>{name} - {rgba}</span>
+                    <span>{name} ({count})</span>
                     <br>
-                    <span>count: {count}</span>
+                    <span>{rgba}</span>
                 </li>
             {/colors}
         </ul>
@@ -17,19 +20,19 @@
     <div>
         <h1>Fonts</h1>
         {#fonts}
-            <h2>Families {@size key=families /}</h2>
+            <h2>Families ({@size key=families /})</h2>
             <ul>
                 {#families}
                     <li>
-                        <p>{.}</p>
+                        <p>{name} ({count})</p>
                     </li>
                 {/families}
             </ul>
-            <h2>Sizes {@size key=sizes /}</h2>
+            <h2>Sizes ({@size key=sizes /})</h2>
             <ul>
                 {#sizes}
                     <li>
-                        <p>{.}</p>
+                        <p>{name} ({count})</p>
                     </li>
                 {/sizes}
             </ul>
