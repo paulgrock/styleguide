@@ -8,11 +8,26 @@
         </form>
         <ul>
             {#colors}
-                <li class="color-container">
+                <li class="color-container" id="{rgba}">
                     <div class="color-block" style="background-color: {rgba};"></div>
                     <span>{name} ({count})</span>
                     <br>
                     <span>{rgba}</span>
+                    {?similar}
+                        <details>
+                            <summary>Similar Colors</summary>
+                            <ul>
+                                {#similar}
+                                    <li>
+                                        <a href="#{.}">
+                                            <div class="color-block" style="background-color: {.};"></div>
+                                            <span>{.}</span>
+                                        </a>
+                                    </li>
+                                {/similar}
+                            </ul>
+                        </details>
+                    {/similar}
                 </li>
             {/colors}
         </ul>

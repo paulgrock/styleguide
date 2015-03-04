@@ -6,12 +6,12 @@ var postcss = require('postcss'),
     Color = require('onecolor'),
     namer = require('color-namer'),
     pipetteur = require('pipetteur'),
-    diff = require('color-diff');
+    colorDiff = require('color-diff');
 
 var precompiledRegexSize = /(size)/i;
 var precompiledRegexRem = /(rem)/i;
 var precompiledRegexFamily = /(family)/i;
-
+var pallette = [];
 var incrementor = function incrementor(obj) {
     return function(key) {
         if (obj[key]) {
@@ -28,6 +28,10 @@ var sortByCount = function(list) {
     list.sort(function(a, b) {
         return b.count - a.count;
     });
+}
+
+var rgbToLab = function(rgb) {
+    return colorDiff.rgb_to_lab(rgb);
 }
 
 module.exports = function IndexModel() {
@@ -68,14 +72,35 @@ module.exports = function IndexModel() {
     var colorList = []
     for (var item in colors) {
         var entry = colors[item];
-        var col = Color(item).hex()
+        var oneColor = Color(item);
+        var col = oneColor.hex();
         let names = namer(col).ntc;
+        var rgb = {
+            R: Math.round(oneColor.red() * 255),
+            G: Math.round(oneColor.green() * 255),
+            B: Math.round(oneColor.blue() * 255)
+        }
+        pallette.push(rgb)
         colorList.push({
             count: entry,
             rgba: item,
-            name: names[0].name
+            name: names[0].name,
+            rgb: rgb,
+            similar: []
         })
     }
+
+    colorList.forEach(function(color) {
+        for (var i = 0, len = pallette.length; i < len; i += 1) {
+            var similarColor = pallette[i];
+            var diff = colorDiff.diff(rgbToLab(color.rgb), rgbToLab(similarColor));
+            if (diff < 3 && diff > 0) {
+                var colorString = 'rgb(' + similarColor.R + ', ' + similarColor.G + ', ' + similarColor.B + ')';
+                color.similar.push(Color(colorString).cssa());
+            }
+        }
+    });
+
     fonts.sizes = [];
     for (var item in fontSizes) {
         if (fontSizes.hasOwnProperty(item)) {
@@ -93,11 +118,11 @@ module.exports = function IndexModel() {
             })
         }
     }
-    // var closeColor = diff.closest(colorList[0], colorList);
-    // console.log(closeColor)
+
     sortByCount(colorList);
     sortByCount(fonts.sizes);
     sortByCount(fonts.families);
+
     return {
         colors: colorList,
         fonts: fonts
