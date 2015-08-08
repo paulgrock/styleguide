@@ -1,16 +1,13 @@
 'use strict';
 
+const IndexModel = require('../models/index');
 
-var IndexModel = require('../models/index');
+module.exports = function(router) {
+  const model = new IndexModel();
 
+  model.title = 'CSS Styleguide Helper';
 
-module.exports = function (router) {
-
-    var model = new IndexModel();
-
-
-    router.get('/', function (req, res) {
-        res.render('index', model);
-    });
-
+  router.get('/', function(req, res) {
+    res.render(req.url, model);
+  });
 };

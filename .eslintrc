@@ -1,0 +1,8 @@
+{
+  "extends": "airbnb",
+  "rules": {
+    "strict": [1, "global"],
+    "comma-dangle": [2, "never"],
+    "func-names": [0]
+  }
+}

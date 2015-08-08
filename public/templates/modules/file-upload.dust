@@ -1,0 +1,4 @@
+<form class="file-upload" action="/process" method="post">
+  <label for="file-upload"></label>
+  <input type="file" name="file-upload" id="file-upload">
+</form>
