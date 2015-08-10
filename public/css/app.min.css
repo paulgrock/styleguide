@@ -1,21 +1,19 @@
 ul {
   list-style-type: none;
 }
-
 .color-container {
   display: inline-block;
   vertical-align: top;
   margin: 0 1rem 1rem 0;
 }
-
 .color-container:target {
   transform: scale(1.1);
   border: 2px solid blue;
 }
-
 .color-block {
   width: 160px;
   height: 90px;
   border: 1px solid black;
   display: block;
 }
+/*# sourceMappingURL=public/css/app.min.css.map */

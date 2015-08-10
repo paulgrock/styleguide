@@ -1,13 +1,10 @@
 'use strict';
 const postcss = require('postcss');
-const fs = require('fs');
-const filePath = './examples/hearthstone.css';
-const styles = fs.readFileSync(filePath, 'utf8');
 const Color = require('onecolor');
 const namer = require('color-namer');
 const pipetteur = require('pipetteur');
 const colorDiff = require('color-diff');
-const specificityGraph = require('specificity-graph');
+// const specificityGraph = require('specificity-graph');
 const precompiledRegexSize = /(size)/i;
 const precompiledRegexRem = /(rem)/i;
 const precompiledRegexFamily = /(family)/i;
@@ -36,7 +33,7 @@ const rgbToLab = function(rgb) {
   return colorDiff.rgb_to_lab(rgb);
 };
 
-module.exports = function IndexModel() {
+module.exports = function IndexModel(styles, filePath) {
   const colors = {};
   const fonts = {
     families: [],

@@ -11,5 +11,7 @@ module.exports = function (grunt) {
     // Register group tasks
     grunt.registerTask('build', [ 'less', 'browserify', 'i18n', 'copyto' ]);
     grunt.registerTask('test', [ 'mochacli' ]);
+    grunt.registerTask('default', [ 'watch' ]);
+
 
 };
