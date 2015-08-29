@@ -3,20 +3,24 @@ import { connect } from 'react-redux';
 import { addColors, addFonts, setParsedFile } from '../js/actions';
 
 import Color from './colors/colors.jsx';
+import Font from './fonts/fonts.jsx';
 import FileUpload from './file-upload.jsx';
 
 const Wrapper = React.createClass({
   render() {
     const { dispatch, colors } = this.props;
-    let content;
+    let colorContent;
+    let fonts;
     if (this.props.parsedFile) {
-      content = <Color {...this.props} />;
+      colorContent = <Color {...this.props} />;
+      fonts = <Font {...this.props.fonts} />;
     }
 
     return (
       <div>
         <FileUpload _csrf={this.props._csrf} handleParseFile={this.handleParseFile} />
-        {content}
+        {colorContent}
+        {fonts}
       </div>
     );
   },

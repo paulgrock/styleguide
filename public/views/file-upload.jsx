@@ -32,6 +32,5 @@ export default React.createClass({
   handleClick(e) {
     e.preventDefault();
     console.log(e);
-    debugger;
   }
 })
